@@ -75,6 +75,15 @@
    - `defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"`
    - `killall Finder`
 
+### 2.5 显示
+- 关闭 `True Tone`（自动色调/原彩显示）。
+
+#### 2.5.1 True Tone 配置执行流程（UI 自动化）
+1. 打开显示设置页：`open "x-apple.systempreferences:com.apple.Displays-Settings.extension"`。
+2. 在 `System Settings > Displays` 主内容区定位 `True Tone` 开关（`AXCheckBox name=True Tone`）。
+3. 若当前值为开启（`value=1`），点击该开关切换为关闭（`value=0`）。
+4. 再次读取控件值确认 `True Tone` 为关闭状态。
+
 ## 3) Dock 排列规范（按分类）
 - 分类顺序：生活 -> 娱乐 -> 生产力。
 - 生活：`App Store`、`Calendar`、`Notes`、`Photos`、`Voice Memos`、`WeChat`。
@@ -95,9 +104,12 @@
 - Dock 顺序与分类符合第 3 节。
 - 手势、Dock、桌面相关设置与第 2 节一致。
 - Finder 侧边栏与默认路径符合第 2.4 节。
+- 显示设置符合第 2.5 节（`True Tone` 关闭）。
 - iCloud 同步验收：`defaults read MobileMeAccounts` 中存在 `ServiceID = com.apple.Dataclass.CloudDesktop` 且 `status = active`。
 
 ## 5) 备注（执行策略）
 - 遇到 GUI 安装器需要管理员权限时，允许人工确认安装步骤。
 - 官网优先级高于其他来源；除非官网不可用，不使用第三方下载站。
+- 若某配置项不存在稳定、可复用的 `defaults`/CLI 修改路径，则统一使用 UI 自动化完成配置。
+- UI 自动化执行系统设置时，避免依赖设置页搜索框输入关键词（输入法会影响搜索词），优先使用直达 deep link + 控件定位。
 - 若自动化工具无法直接控制某页面，退回“打开官网 + 人工点击安装”的兜底流程。
