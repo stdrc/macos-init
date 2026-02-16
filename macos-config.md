@@ -13,8 +13,8 @@
 ### 1.1 基础工具链
 - 安装 `Homebrew`（官方脚本；仅用于少量基础 CLI，不用于 GUI 应用管理）。
 - 安装 `uv`（官网 install 脚本，优先通过官网页面获取脚本入口）。
-- 安装 `Volta`（官网 install 脚本，优先通过官网页面获取脚本入口）。
-- 通过 `Volta` 安装 `Node.js`（自动包含 `npm`）。
+- 安装 `nvm`（按 Node.js 官网文档推荐路径安装）。
+- 通过 `nvm` 安装 `Node.js`（自动包含 `npm`，优先安装 LTS）。
 
 ### 1.2 自动化工具
 - 通过 `npm` 或 `npx` 使用 `agent-browser`。
@@ -92,7 +92,7 @@
 - 分类之间插入 `Spacer` 分隔。
 
 ## 4) 验收标准（必须检查）
-- `node -v`、`npm -v`、`uv --version`、`volta --version` 可执行。
+- `node -v`、`npm -v`、`uv --version`、`nvm --version` 可执行。
 - 应用存在于 `/Applications` 且可正常启动。
 - 关键应用架构检查通过（含 `arm64`）：
   - `lipo -archs "/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge"`
