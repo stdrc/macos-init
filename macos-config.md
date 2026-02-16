@@ -84,6 +84,27 @@
 3. 若当前值为开启（`value=1`），点击该开关切换为关闭（`value=0`）。
 4. 再次读取控件值确认 `True Tone` 为关闭状态。
 
+### 2.6 电源与屏幕保护（接电源）
+- 接电源（AC Power）时：不要自动休眠（system sleep = never）。
+- 接电源（AC Power）时：不要关闭屏幕（display sleep/turn off = never）。
+- 空闲时：不要熄屏，改为进入屏幕保护模式（屏幕保护在空闲 `5` 分钟后启动）。
+
+#### 2.6.1 配置执行流程（命令行，优先）
+1. 设置接电源时永不休眠、永不关闭屏幕（需要 `sudo`）：
+   - `sudo pmset -c sleep 0 displaysleep 0`
+2. 设置屏幕保护空闲启动时间（5 分钟 = 300 秒）：
+   - `defaults -currentHost write com.apple.screensaver idleTime -int 300`
+3. 验证：
+   - `pmset -g custom`（确认 `AC Power` 下 `sleep 0`、`displaysleep 0`）
+   - `defaults -currentHost read com.apple.screensaver idleTime`（输出应为 `300`）
+
+#### 2.6.2 配置执行流程（UI 兜底）
+1. 打开锁定屏幕设置页：`open "x-apple.systempreferences:com.apple.Lock-Screen-Settings.extension"`。
+2. 在 `Lock Screen` 中设置（以接电源为准）：
+   - `Turn display off on power adapter when inactive` -> `Never`
+   - `Start Screen Saver when inactive` -> `After 5 minutes`
+3. 验证：接电源后保持空闲，约 5 分钟进入屏幕保护，且不会熄屏/休眠。
+
 ## 3) Dock 排列规范（按分类）
 - 分类顺序：生活 -> 娱乐 -> 生产力。
 - 生活：`App Store`、`Calendar`、`Notes`、`Photos`、`Voice Memos`、`WeChat`。
@@ -105,6 +126,9 @@
 - 手势、Dock、桌面相关设置与第 2 节一致。
 - Finder 侧边栏与默认路径符合第 2.4 节。
 - 显示设置符合第 2.5 节（`True Tone` 关闭）。
+- 接电源电源策略符合第 2.6 节：
+  - `pmset -g custom` 中 `AC Power` 下 `sleep 0`、`displaysleep 0`
+  - `defaults -currentHost read com.apple.screensaver idleTime` 输出为 `300`
 - iCloud 同步验收：`defaults read MobileMeAccounts` 中存在 `ServiceID = com.apple.Dataclass.CloudDesktop` 且 `status = active`。
 
 ## 5) 备注（执行策略）
